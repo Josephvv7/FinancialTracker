@@ -8,14 +8,14 @@ import java.util.Scanner;
 public class FinancialTracker {
 
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-    private static final String FILE_NAME = "transactions.csv";
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private static final String TIME_FORMAT = "HH:mm:ss";
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
+    private static final String fileName = "transactions.csv";
+    private static final String dateFormat = "yyyy-MM-dd";
+    private static final String timeFormat = "HH:mm:ss";
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
 
     public static void main(String[] args) {
-        loadTransactions(FILE_NAME);
+        loadTransactions(fileName);
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -185,4 +185,4 @@ public class FinancialTracker {
         // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
     }
 }
- 
+
