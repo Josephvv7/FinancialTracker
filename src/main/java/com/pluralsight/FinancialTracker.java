@@ -106,11 +106,15 @@ public class FinancialTracker {
 //                amount = Double.parseDouble(scanner.nextLine()) * -1;
 //            }
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-                writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
                 transactions.add(new Transaction(date, time, description, vendor, amount));
+                writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
+                writer.close();
+//              writer.newLine();
 
                 System.out.println("Deposit Added");
+
             }
+
         } catch (Exception e) {
             System.out.println("Error adding a deposit: ");
             e.printStackTrace();
@@ -145,12 +149,16 @@ public class FinancialTracker {
 //                return;
 //            }
 //            amount = amount * -1;
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+                transactions.add(new Transaction(date, time, description, vendor, amount));
+                writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
+                writer.close();
+                System.out.println("Payment Added");
 
-            transactions.add(new Transaction(date, time, description, vendor, amount));
-            System.out.println("Deposit Added");
+            }
 
         } catch (Exception e) {
-            System.out.println("Error adding a deposit: ");
+            System.out.println("Error Adding Payment: ");
             e.printStackTrace();
         }
     }
@@ -160,8 +168,6 @@ public class FinancialTracker {
         // The amount received should be a positive number then transformed to a negative number.
         // After validating the input, a new `Transaction` object should be created with the entered values.
         // The new payment should be added to the `transactions` ArrayList.
-
-
 
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
