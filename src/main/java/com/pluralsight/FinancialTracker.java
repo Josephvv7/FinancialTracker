@@ -1,6 +1,10 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,14 +12,14 @@ import java.util.Scanner;
 public class FinancialTracker {
 
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-    private static final String fileName = "transactions.csv";
-    private static final String dateFormat = "yyyy-MM-dd";
-    private static final String timeFormat = "HH:mm:ss";
-    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
-    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
+    private static final String FILE_NAME = "transactions.csv";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final String TIME_FORMAT = "HH:mm:ss";
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
     public static void main(String[] args) {
-        loadTransactions(fileName);
+        loadTransactions(FILE_NAME);
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -51,8 +55,26 @@ public class FinancialTracker {
         scanner.close();
     }
 
-    public static void loadTransactions(String fileName) {
+    public static void loadTransactions(String FILE_NAME) {
         // This method should load transactions from a file with the given file name.
+        String line;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("transaction.csv"));
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                LocalDate date = LocalDate.parse(parts[0], dateFormatter);
+                LocalTime time = LocalTime.parse(parts[1], timeFormatter);
+                String description = parts[2];
+                String vendor = parts[3];
+                double amount = Double.parseDouble(parts[4]);
+                transactions.add(new Transaction(date, time, description, vendor, amount));
+            }
+
+                bufferedReader.close();
+        } catch(Exception e) {
+
+        }
+    }
         // If the file does not exist, it should be created.
         // The transactions should be stored in the `transactions` ArrayList.
         // Each line of the file represents a single transaction in the following format:
@@ -60,7 +82,6 @@ public class FinancialTracker {
         // For example: 2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50
         // After reading all the transactions, the file should be closed.
         // If any errors occur, an appropriate error message should be displayed.
-    }
 
     private static void addDeposit(Scanner scanner) {
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
@@ -83,7 +104,7 @@ public class FinancialTracker {
         while (running) {
             System.out.println("Ledger");
             System.out.println("Choose an option:");
-            System.out.println("A) A`ll");
+            System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
             System.out.println("R) Reports");
@@ -114,6 +135,14 @@ public class FinancialTracker {
     }
 
     private static void displayLedger() {
+        for (Transaction transaction : transactions) {
+            System.out.printf("%s | %s | %-25s | %-15s | %10.2f\n",
+                    transaction.getDate().format(dateFormatter),
+                    transaction.getTime().format(timeFormatter),
+                    transaction.getDescription(),
+                    transaction.getVendor(),
+                    transaction.getAmount());
+        }
         // This method should display a table of all transactions in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
@@ -185,4 +214,3 @@ public class FinancialTracker {
         // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
     }
 }
-
