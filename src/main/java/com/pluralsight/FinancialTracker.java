@@ -105,19 +105,20 @@ public class FinancialTracker {
 //            if (amount <= 0) {
 //                amount = Double.parseDouble(scanner.nextLine()) * -1;
 //            }
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
                 transactions.add(new Transaction(date, time, description, vendor, amount));
                 writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
                 writer.close();
 //              writer.newLine();
 
                 System.out.println("Deposit Added");
-
+            } catch (Exception e) {
+                System.out.println("Error saving to file" + e.getMessage());
+                e.printStackTrace();
             }
-
         } catch (Exception e) {
-            System.out.println("Error adding a deposit: ");
-            e.printStackTrace();
+            System.out.println("Error Adding Deposit" + e.getMessage());
         }
     }
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
@@ -205,9 +206,10 @@ public class FinancialTracker {
         }
     }
 
+    // This method should display a table of all transactions in the `transactions` ArrayList.
+    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayLedger() {
         for (Transaction transaction : transactions) {
-//            System.out.println(transaction);
             System.out.printf("%s | %s | %s | %s | %.2f\n",
                     transaction.getDate().format(DATE_FORMATTER),
                     transaction.getTime().format(TIME_FORMATTER),
@@ -215,18 +217,43 @@ public class FinancialTracker {
                     transaction.getVendor(),
                     transaction.getAmount());
         }
-        // This method should display a table of all transactions in the `transactions` ArrayList.
-        // The table should have columns for date, time, description, vendor, and amount.
+//            System.out.println(transaction);
     }
 
+    // This method should display a table of all deposits in the `transactions` ArrayList.
+    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayDeposits() {
-        // This method should display a table of all deposits in the `transactions` ArrayList.
-        // The table should have columns for date, time, description, vendor, and amount.
+        System.out.println("\nDEPOSITS");
+        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
+        System.out.println("--------------------------------------------------------------------------");
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                System.out.printf("%s | %s | %-20s | %-15s | %9.2f\n",
+                        transaction.getDate().format(DATE_FORMATTER),
+                        transaction.getTime().format(TIME_FORMATTER),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
+            }
+        }
     }
 
+    // This method should display a table of all payments in the `transactions` ArrayList.
+    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayPayments() {
-        // This method should display a table of all payments in the `transactions` ArrayList.
-        // The table should have columns for date, time, description, vendor, and amount.
+        System.out.println("\nPAYMENTS");
+        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
+        System.out.println("--------------------------------------------------------------------------");
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                System.out.printf("%s | %s | %s | %s | %.2f\n",
+                        transaction.getDate().format(DATE_FORMATTER),
+                        transaction.getTime().format(TIME_FORMATTER),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
+            }
+        }
     }
 
     private static void reportsMenu(Scanner scanner) {
