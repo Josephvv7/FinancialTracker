@@ -1,8 +1,6 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -86,7 +84,9 @@ public class FinancialTracker {
 
     private static void addDeposit(Scanner scanner) {
         System.out.println("\nAdd Deposit");
-        try {
+        try { /*(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));*/
+
             System.out.println("Enter Date (yyyy-MM-dd): ");
             LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
 
@@ -100,14 +100,17 @@ public class FinancialTracker {
             String vendor = scanner.nextLine();
 
             System.out.println("Enter Amount: ");
-            double amount = Double.parseDouble(scanner.nextLine());
+            double amount = Math.abs(Double.parseDouble(scanner.nextLine()));
 
-            if (amount <= 0) {
-                amount = Double.parseDouble(scanner.nextLine()) * -1;
+//            if (amount <= 0) {
+//                amount = Double.parseDouble(scanner.nextLine()) * -1;
+//            }
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+                writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
+                transactions.add(new Transaction(date, time, description, vendor, amount));
+
+                System.out.println("Deposit Added");
             }
-            transactions.add(new Transaction(date, time, description, vendor, amount));
-            System.out.println("Deposit Added");
-
         } catch (Exception e) {
             System.out.println("Error adding a deposit: ");
             e.printStackTrace();
