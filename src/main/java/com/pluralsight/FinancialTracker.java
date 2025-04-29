@@ -13,10 +13,10 @@ public class FinancialTracker {
 
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     private static final String FILE_NAME = "transactions.csv";
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private static final String TIME_FORMAT = "HH:mm:ss";
-    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(TIME_FORMAT);
+//    private static final String DATE_FORMAT = "yyyy-MM-dd";
+//    private static final String TIME_FORMAT = "HH:mm:ss";
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public static void main(String[] args) {
         loadTransactions(FILE_NAME);
@@ -59,11 +59,11 @@ public class FinancialTracker {
         // This method should load transactions from a file with the given file name.
         String line;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("transaction.csv"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                LocalDate date = LocalDate.parse(parts[0], dateFormatter);
-                LocalTime time = LocalTime.parse(parts[1], timeFormatter);
+                LocalDate date = LocalDate.parse(parts[0], DATE_FORMATTER);
+                LocalTime time = LocalTime.parse(parts[1], TIME_FORMATTER);
                 String description = parts[2];
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
@@ -71,7 +71,8 @@ public class FinancialTracker {
             }
 
                 bufferedReader.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
 
         }
     }
@@ -84,6 +85,7 @@ public class FinancialTracker {
         // If any errors occur, an appropriate error message should be displayed.
 
     private static void addDeposit(Scanner scanner) {
+        System.out.println("");
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount should be a positive number.
@@ -127,6 +129,7 @@ public class FinancialTracker {
                     break;
                 case "H":
                     running = false;
+                    break;
                 default:
                     System.out.println("Invalid option");
                     break;
@@ -136,9 +139,10 @@ public class FinancialTracker {
 
     private static void displayLedger() {
         for (Transaction transaction : transactions) {
-            System.out.printf("%s | %s | %-25s | %-15s | %10.2f\n",
-                    transaction.getDate().format(dateFormatter),
-                    transaction.getTime().format(timeFormatter),
+//            System.out.println(transaction);
+            System.out.printf("%s | %s | %s | %s | %.2f\n",
+                    transaction.getDate().format(DATE_FORMATTER),
+                    transaction.getTime().format(TIME_FORMATTER),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     transaction.getAmount());
