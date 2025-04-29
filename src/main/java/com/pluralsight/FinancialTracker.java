@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class FinancialTracker {
 
-    private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    private static ArrayList<Transaction> transactions = new ArrayList<>();
     private static final String FILE_NAME = "transactions.csv";
 //    private static final String DATE_FORMAT = "yyyy-MM-dd";
 //    private static final String TIME_FORMAT = "HH:mm:ss";
@@ -85,21 +85,80 @@ public class FinancialTracker {
         // If any errors occur, an appropriate error message should be displayed.
 
     private static void addDeposit(Scanner scanner) {
-        System.out.println("");
+        System.out.println("\nAdd Deposit");
+        try {
+            System.out.println("Enter Date (yyyy-MM-dd): ");
+            LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+
+            System.out.println("Enter Time (HH:mm:ss): ");
+            LocalTime time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
+
+            System.out.println("Enter Description: ");
+            String description = scanner.nextLine();
+
+            System.out.println("Enter Vendor: ");
+            String vendor = scanner.nextLine();
+
+            System.out.println("Enter Amount: ");
+            double amount = Double.parseDouble(scanner.nextLine());
+
+            if (amount <= 0) {
+                amount = Double.parseDouble(scanner.nextLine()) * -1;
+            }
+            transactions.add(new Transaction(date, time, description, vendor, amount));
+            System.out.println("Deposit Added");
+
+        } catch (Exception e) {
+            System.out.println("Error adding a deposit: ");
+            e.printStackTrace();
+        }
+    }
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount should be a positive number.
         // After validating the input, a new `Transaction` object should be created with the entered values.
         // The new deposit should be added to the `transactions` ArrayList.
-    }
 
     private static void addPayment(Scanner scanner) {
+        System.out.println("\nAdd Payment");
+        try {
+            System.out.println("Enter Date (yyyy-MM-dd): ");
+            LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+
+            System.out.println("Enter Time (HH:mm:ss): ");
+            LocalTime time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
+
+            System.out.println("Enter Description: ");
+            String description = scanner.nextLine();
+
+            System.out.println("Enter Vendor: ");
+            String vendor = scanner.nextLine();
+
+            System.out.println("Enter Amount: ");
+            double amount = Double.parseDouble(scanner.nextLine()) * -1;
+
+//            if (amount <= 0) {
+//                System.out.println("Deposit Amount Must Be Positive");
+//                return;
+//            }
+//            amount = amount * -1;
+
+            transactions.add(new Transaction(date, time, description, vendor, amount));
+            System.out.println("Deposit Added");
+
+        } catch (Exception e) {
+            System.out.println("Error adding a deposit: ");
+            e.printStackTrace();
+        }
+    }
+
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount received should be a positive number then transformed to a negative number.
         // After validating the input, a new `Transaction` object should be created with the entered values.
         // The new payment should be added to the `transactions` ArrayList.
-    }
+
+
 
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
@@ -185,7 +244,6 @@ public class FinancialTracker {
                 case "3":
                     // Generate a report for all transactions within the current year,
                     // including the date, time, description, vendor, and amount for each transaction.
-
                 case "4":
                     // Generate a report for all transactions within the previous year,
                     // including the date, time, description, vendor, and amount for each transaction.
