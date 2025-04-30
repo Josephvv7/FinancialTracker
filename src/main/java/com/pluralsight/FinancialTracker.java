@@ -120,12 +120,10 @@ public class FinancialTracker {
 
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-                writer.write(newTransaction.toString());
                 writer.newLine();
+                writer.write(newTransaction.toString());
                 System.out.println("Deposit Added");
                 writer.close();
-
-//              writer.newLine();
 
             } catch (Exception e) {
                 System.out.println("Error Saving To File" + e.getMessage());
@@ -177,13 +175,10 @@ public class FinancialTracker {
 
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-
-                writer.write(newTransaction.toString());
                 writer.newLine();
+                writer.write(newTransaction.toString());
                 System.out.println("Payment Added");
                 writer.close();
-
-//              writer.newLine();
 
             } catch (Exception e) {
                 System.out.println("Error Saving To File: ");
@@ -325,15 +320,17 @@ public class FinancialTracker {
         }
     }
 
-
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
+
         boolean found = false;
+
         for (Transaction transaction : transactions)
             if (!transaction.getDate().isBefore(startDate) && !transaction.getDate().isAfter(endDate)) {
                 found = true;
                 break;
             }
         if (found) {
+//
             for (Transaction transaction : transactions) {
                 if (!transaction.getDate().isBefore(startDate) && !transaction.getDate().isAfter(endDate)) {
                     System.out.println(transaction);
@@ -341,6 +338,7 @@ public class FinancialTracker {
                 }
             }
         }
+
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
