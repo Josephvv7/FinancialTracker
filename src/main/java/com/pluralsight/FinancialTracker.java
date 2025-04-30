@@ -155,7 +155,6 @@ public class FinancialTracker {
                 writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
                 writer.close();
                 System.out.println("Payment Added");
-
             }
 
         } catch (Exception e) {
@@ -209,8 +208,11 @@ public class FinancialTracker {
     // This method should display a table of all transactions in the `transactions` ArrayList.
     // The table should have columns for date, time, description, vendor, and amount.
     private static void displayLedger() {
+        System.out.println("\nLEDGER");
+        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
+        System.out.println("--------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
-            System.out.printf("%s | %s | %s | %s | %.2f\n",
+            System.out.printf("%s | %s | %-20s | %-15s | %9.2f\n",
                     transaction.getDate().format(DATE_FORMATTER),
                     transaction.getTime().format(TIME_FORMATTER),
                     transaction.getDescription(),
@@ -246,7 +248,7 @@ public class FinancialTracker {
         System.out.println("--------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
-                System.out.printf("%s | %s | %s | %s | %.2f\n",
+                System.out.printf("%s | %s | %-20s | %-15s | %9.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
