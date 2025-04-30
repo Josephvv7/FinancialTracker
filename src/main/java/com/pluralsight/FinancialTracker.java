@@ -83,16 +83,26 @@ public class FinancialTracker {
         // If any errors occur, an appropriate error message should be displayed.
 
     private static void addDeposit(Scanner scanner) {
+
         System.out.println("\nAdd Deposit");
-        try { /*(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-            writer.write(String.format("%s | %s | %s | %s | %.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));*/
-
-            System.out.println("Enter Date (yyyy-MM-dd): ");
-            LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
-
-            System.out.println("Enter Time (HH:mm:ss): ");
-            LocalTime time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
-
+        LocalDate date = null;
+        LocalTime time = null;
+        while (date == null) {
+            try {
+                System.out.println("Enter Date (yyyy-MM-dd): ");
+                date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+            } catch (Exception e) {
+                System.out.println("Date Invalid! Please Try Again.");
+            }
+        }
+        while ( time == null){
+            try {
+                System.out.println("Enter Time (HH:mm:ss): ");
+                time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
+            } catch (Exception e) {
+                System.out.println("Time Invalid! Please Try Again.");
+            }
+        }
             System.out.println("Enter Description: ");
             String description = scanner.nextLine();
 
@@ -110,7 +120,6 @@ public class FinancialTracker {
 
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-
                 writer.write(newTransaction.toString());
                 writer.newLine();
                 System.out.println("Deposit Added");
@@ -122,9 +131,6 @@ public class FinancialTracker {
                 System.out.println("Error Saving To File" + e.getMessage());
                 e.printStackTrace();
             }
-        } catch (Exception e) {
-            System.out.println("Error Adding Deposit" + e.getMessage());
-        }
     }
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
@@ -134,13 +140,24 @@ public class FinancialTracker {
 
     private static void addPayment(Scanner scanner) {
         System.out.println("\nAdd Payment");
-        try {
-            System.out.println("Enter Date (yyyy-MM-dd): ");
-            LocalDate date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
-
-            System.out.println("Enter Time (HH:mm:ss): ");
-            LocalTime time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
-
+        LocalDate date = null;
+        LocalTime time = null;
+        while (date == null) {
+            try {
+                System.out.println("Enter Date (yyyy-MM-dd): ");
+                date = LocalDate.parse(scanner.nextLine(), DATE_FORMATTER);
+            } catch (Exception e) {
+                System.out.println("Date Invalid! Please Try Again.");
+            }
+        }
+        while ( time == null){
+            try {
+                System.out.println("Enter Time (HH:mm:ss): ");
+                time = LocalTime.parse(scanner.nextLine(), TIME_FORMATTER);
+            } catch (Exception e) {
+                System.out.println("Time Invalid! Please Try Again.");
+            }
+        }
             System.out.println("Enter Description: ");
             String description = scanner.nextLine();
 
@@ -172,9 +189,6 @@ public class FinancialTracker {
                 System.out.println("Error Saving To File: ");
                 e.printStackTrace();
             }
-        } catch (Exception e) {
-            System.out.println("Error Adding Payment" + e.getMessage());
-        }
     }
 
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
@@ -313,6 +327,20 @@ public class FinancialTracker {
 
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
+        boolean found = false;
+        for (Transaction transaction : transactions)
+            if (!transaction.getDate().isBefore(startDate) && !transaction.getDate().isAfter(endDate)) {
+                found = true;
+                break;
+            }
+        if (found) {
+            for (Transaction transaction : transactions) {
+                if (!transaction.getDate().isBefore(startDate) && !transaction.getDate().isAfter(endDate)) {
+                    System.out.println(transaction);
+                    System.out.println("+" + "-".repeat(90) + "+");
+                }
+            }
+        }
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
