@@ -105,16 +105,21 @@ public class FinancialTracker {
 //            if (amount <= 0) {
 //                amount = Double.parseDouble(scanner.nextLine()) * -1;
 //            }
+            Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+            transactions.add(newTransaction);
+
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-                transactions.add(new Transaction(date, time, description, vendor, amount));
-                writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
+
+                writer.write(newTransaction.toString());
+                writer.newLine();
+                System.out.println("Deposit Added");
                 writer.close();
+
 //              writer.newLine();
 
-                System.out.println("Deposit Added");
             } catch (Exception e) {
-                System.out.println("Error saving to file" + e.getMessage());
+                System.out.println("Error Saving To File" + e.getMessage());
                 e.printStackTrace();
             }
         } catch (Exception e) {
@@ -150,16 +155,25 @@ public class FinancialTracker {
 //                return;
 //            }
 //            amount = amount * -1;
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-                transactions.add(new Transaction(date, time, description, vendor, amount));
-                writer.write(String.format("%s|%s|%s|%s|%.2f\n", date.format(DATE_FORMATTER), time.format(TIME_FORMATTER), description, vendor, amount));
-                writer.close();
-                System.out.println("Payment Added");
-            }
+            Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+            transactions.add(newTransaction);
 
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+
+                writer.write(newTransaction.toString());
+                writer.newLine();
+                System.out.println("Payment Added");
+                writer.close();
+
+//              writer.newLine();
+
+            } catch (Exception e) {
+                System.out.println("Error Saving To File: ");
+                e.printStackTrace();
+            }
         } catch (Exception e) {
-            System.out.println("Error Adding Payment: ");
-            e.printStackTrace();
+            System.out.println("Error Adding Payment" + e.getMessage());
         }
     }
 
