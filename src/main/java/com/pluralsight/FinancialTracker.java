@@ -179,8 +179,8 @@ public class FinancialTracker {
             writer.close();
 
         } catch (Exception e) {
-            System.out.println("Error Saving To File: ");
-            e.printStackTrace();
+            System.out.println("Error Saving To File: " + e.getMessage());
+
         }
     }
 
@@ -305,7 +305,9 @@ public class FinancialTracker {
                     // Generate a report for all transactions within the previous month,
                     // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate firstOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
-                    LocalDate lastOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(31);
+
+                    //lengthOfMonth() = returns the correct number of days for any month (28-31)
+                    LocalDate lastOfLastMonth = firstOfLastMonth.withDayOfMonth(firstOfLastMonth.lengthOfMonth());
                     filterTransactionsByDate(firstOfLastMonth, lastOfLastMonth);
                     break;
                 case "3":
@@ -318,12 +320,16 @@ public class FinancialTracker {
                     // Generate a report for all transactions within the previous year,
                     // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate firstOfLastYear = LocalDate.now().minusYears(1).withDayOfYear(1);
-                    LocalDate lastOfLastYear = LocalDate.now().minusYears(1).withDayOfYear(365);
+                    LocalDate lastOfLastYear = LocalDate.now().minusYears(1).withDayOfYear(firstOfLastYear.lengthOfYear()); //This checks for leap years
                     filterTransactionsByDate(firstOfLastYear, lastOfLastYear);
                     break;
                 case "5":
                     // Prompt the user to enter a vendor name, then generate a report for all transactions
                     // with that vendor, including the date, time, description, vendor, and amount for each transaction.
+                    System.out.println("\nEnter Vendor Name: ");
+                    String vendor = scanner.nextLine().trim();
+                    filterTransactionsByVendor(vendor);
+                    break;
                 case "0":
                     running = false;
                 default:
@@ -334,14 +340,24 @@ public class FinancialTracker {
     }
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
-
         boolean dateFilter = false;
+        System.out.println("\nTransactions From " + startDate + " To " + endDate);
+        System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
+        System.out.println("---------------------------------------------------------------------------------------------");
 
-        for (Transaction transaction : transactions)
+        for (Transaction transaction : transactions) {
             if (transaction.getDate().isEqual(startDate) || transaction.getDate().isAfter(startDate) && transaction.getDate().isBefore(endDate) || transaction.getDate().isEqual(endDate)) {
+
+                /*System.out.println(transaction);*/
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                        transaction.getDate().format(DATE_FORMATTER),
+                        transaction.getTime().format(TIME_FORMATTER),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
                 dateFilter = true;
-                System.out.println(transaction);
             }
+        }
 
         if (!dateFilter) {
             System.out.println("No Transactions Found!");
@@ -357,11 +373,26 @@ public class FinancialTracker {
     private static void filterTransactionsByVendor(String vendor) {
 
         boolean vendorFilter = false;
-        for (Transaction transaction : transactions){
+        System.out.println("\nTRANSACTIONS FOUND FROM VENDOR: " + vendor);
+        System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
+        System.out.println("---------------------------------------------------------------------------------------------");
+
+        for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)){
+                /*System.out.println(transaction);*/
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                        transaction.getDate().format(DATE_FORMATTER),
+                        transaction.getTime().format(TIME_FORMATTER),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getAmount());
                 vendorFilter = true;
 
             }
+        }
+
+        if (!vendorFilter) {
+            System.out.println("NO TRANSACTIONS FOUND FROM VENDOR: " + vendor);
         }
         // This method filters the transactions by vendor and prints a report to the console.
         // It takes one parameter: vendor, which represents the name of the vendor to filter by.
