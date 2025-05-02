@@ -74,20 +74,22 @@ Include screenshots or GIFs that show your application in action. Use tools like
 
 Potential future enhancements for future versions:
 
-- Add an user authentication system
-- Improvement of current functionalities.
+- Add a user authentication system
+- Support for multiple accounts
+- Maybe be able to track budget
+- Export to PDF or Excel formats
 
 ## Resources
 
 List resources such as tutorials, articles, or documentation that helped you during the project.
 
-- [Java Programming Tutorial](https://www.example.com)
-- [Effective Java](https://www.example.com)
+- [Java DateTime Tutorial](https://www.baeldung.com/java-8-date-time-intro)
+- [My own notes from different exercises](https://github.com/Josephvv7/java-development)
 
 ## Thanks
 
 Express gratitude towards those who provided help, guidance, or resources:
 
-- Thank you to [Mentor's Name] for continuous support and guidance.
+- Thank you to Raymond for continuous support and guidance.
 - A special thanks to all teammates for their dedication and teamwork.
  
