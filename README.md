@@ -66,9 +66,8 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Demo
 
+![DEMO Financial Tracker App.mp4](../../../DEMO%20Financial%20Tracker%20App.mp4)
 
-
-![Application Screenshot](path/to/your/screenshot.png)
 
 ## Future Work
 
@@ -88,8 +87,8 @@ List resources such as tutorials, articles, or documentation that helped you dur
 
 ## Thanks
 
-Express gratitude towards those who provided help, guidance, or resources:
+Thank you to everyone that helped me out this week!
 
 - Thank you to Raymond for continuous support and guidance.
-- A special thanks to all teammates for their dedication and teamwork.
+- To those that have presented great job! And to those that are going next you got this!
  

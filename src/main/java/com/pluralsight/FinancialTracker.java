@@ -17,6 +17,7 @@ public class FinancialTracker {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
 
     public static void main(String[] args) {
+
         loadTransactions(FILE_NAME);
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -54,38 +55,32 @@ public class FinancialTracker {
     }
 
     public static void loadTransactions(String fileName) {
-        // This method should load transactions from a file with the given file name.
         String line;
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split("\\|");
+
                 LocalDate date = LocalDate.parse(parts[0], DATE_FORMATTER);
                 LocalTime time = LocalTime.parse(parts[1], TIME_FORMATTER);
                 String description = parts[2];
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
+
                 transactions.add(new Transaction(date, time, description, vendor, amount));
             }
-
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("Error Saving To File!");
+            System.out.println("Error Loading File!");
         }
     }
-    // If the file does not exist, it should be created.
-    // The transactions should be stored in the `transactions` ArrayList.
-    // Each line of the file represents a single transaction in the following format:
-    // <date>|<time>|<description>|<vendor>|<amount>
-    // For example: 2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50
-    // After reading all the transactions, the file should be closed.
-    // If any errors occur, an appropriate error message should be displayed.
 
     private static void addDeposit(Scanner scanner) {
 
         System.out.println("\nAdd Deposit");
         LocalDate date = null;
         LocalTime time = null;
+
         while (date == null) {
             try {
                 System.out.println("Enter Date (yyyy-MM-dd): ");
@@ -121,9 +116,8 @@ public class FinancialTracker {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.newLine();
             writer.write(newTransaction.toString());
-            System.out.println("Deposit Added");
             writer.close();
-
+            System.out.println("Deposit Added!");
         } catch (Exception e) {
             System.out.println("Error Saving To File!" + e.getMessage());
         }
@@ -132,6 +126,7 @@ public class FinancialTracker {
         System.out.println("\nAdd Payment");
         LocalDate date = null;
         LocalTime time = null;
+
         while (date == null) {
             try {
                 System.out.println("Enter Date (yyyy-MM-dd): ");
@@ -154,7 +149,7 @@ public class FinancialTracker {
         System.out.println("Enter Vendor: ");
         String vendor = scanner.nextLine();
 
-        System.out.println("Enter Amount As Negative Number: ");
+        System.out.println("Enter Payment Amount As Positive Number: ");
         double amount = -Math.abs(Double.parseDouble(scanner.nextLine()));
 
 //            if (amount <= 0) {
@@ -169,8 +164,8 @@ public class FinancialTracker {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.newLine();
             writer.write(newTransaction.toString());
-            System.out.println("Payment Added");
             writer.close();
+            System.out.println("Payment Added");
 
         } catch (Exception e) {
             System.out.println("Error Saving To File: " + e.getMessage());
@@ -217,14 +212,13 @@ public class FinancialTracker {
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
         System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
-            System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+            System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
                     transaction.getDate().format(DATE_FORMATTER),
                     transaction.getTime().format(TIME_FORMATTER),
                     transaction.getDescription(),
                     transaction.getVendor(),
                     transaction.getAmount());
         }
-//            System.out.println(transaction);
     }
     private static void displayDeposits() {
         System.out.println("\nDEPOSITS");
@@ -232,7 +226,7 @@ public class FinancialTracker {
         System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -247,7 +241,7 @@ public class FinancialTracker {
         System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -315,7 +309,7 @@ public class FinancialTracker {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().isEqual(startDate) || transaction.getDate().isAfter(startDate) && transaction.getDate().isBefore(endDate) || transaction.getDate().isEqual(endDate)) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
