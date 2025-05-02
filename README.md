@@ -2,7 +2,13 @@
 
 ## Description of the Project
 
-Briefly describe what this Java console application does. Mention its purpose and who the intended users are. Explain the main functionality and what problems it aims to solve.
+The Financial Tracker Application is a console application made in Java that is designed to help users manage personal finances. 
+This app does so by tracking deposits and payments.
+In greater detail this application allows users to:
+- Record financial transactions such deposits and payments
+- View transaction history in different formats, 
+- Generate customized financial reports, 
+- Search transactions by vendors.
 
 ![Class Diagram](path/to/your/class_diagram.png)
 
@@ -10,8 +16,27 @@ Briefly describe what this Java console application does. Mention its purpose an
 
 List the user stories that guided the development of your application. Format these stories as: "As a [type of user], I want [some goal] so that [some reason]."
 
-- As a user, I want to be able to input my data, so that the application can process it accordingly.
-- As a user, I want to receive immediate feedback, so I can understand what to do next.
+- As a user, I want my transactions to be loaded from a file when the application starts so that I can access my previous transaction history
+
+- As a user, I want to add new deposits to my transaction history so that I can track my income
+
+- As a user, I want to add new payments to my transaction history so that I can track my expenses
+
+- As a user, I want to view all my transactions in a ledger so that I can see my complete financial history
+
+- As a user, I want to view only my deposit transactions so that I can analyze my income
+
+- As a user, I want to view only my payment transactions so that I can analyze my expenses
+
+- As a user, I want to generate a report of transactions from the current month so that I can review this month's activity
+
+- As a user, I want to generate a report of transactions from the previous month so that I can review last month's activity
+
+- As a user, I want to generate a report of transactions from the current year so that I can review this year's activity
+
+- As a user, I want to generate a report of transactions from the previous year so that I can review last year's activity
+
+- As a user, I want to search for transactions by vendor name so that I can review all transactions with a specific vendor
 
 ## Setup
 
@@ -34,8 +59,10 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Technologies Used
 
-- Java: Mention the version you are using.
-- Any additional libraries or frameworks used in the project.
+- Java 17: This app is built using core features
+- For handling dates and times I used java.time API
+- java.io was used for file inputs and outputs
+- java.util is used for scanner functionality
 
 ## Demo
 
@@ -45,9 +72,9 @@ Include screenshots or GIFs that show your application in action. Use tools like
 
 ## Future Work
 
-Outline potential future enhancements or functionalities you might consider adding:
+Potential future enhancements for future versions:
 
-- Additional feature to be developed.
+- Add an user authentication system
 - Improvement of current functionalities.
 
 ## Resources
@@ -56,11 +83,6 @@ List resources such as tutorials, articles, or documentation that helped you dur
 
 - [Java Programming Tutorial](https://www.example.com)
 - [Effective Java](https://www.example.com)
-
-## Team Members
-
-- **Name 1** - Specific contributions or roles.
-- **Name 2** - Specific contributions or roles.
 
 ## Thanks
 
