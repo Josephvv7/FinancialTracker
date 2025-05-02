@@ -210,9 +210,9 @@ public class FinancialTracker {
     private static void displayLedger() {
         System.out.println("\nLEDGER");
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
-            System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+            System.out.printf("%-12s | %-10s | %-30s | %-20s | %-10.2f\n",
                     transaction.getDate().format(DATE_FORMATTER),
                     transaction.getTime().format(TIME_FORMATTER),
                     transaction.getDescription(),
@@ -223,10 +223,10 @@ public class FinancialTracker {
     private static void displayDeposits() {
         System.out.println("\nDEPOSITS");
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %-10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -238,10 +238,10 @@ public class FinancialTracker {
     private static void displayPayments() {
         System.out.println("\nPAYMENTS");
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %-10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -305,11 +305,11 @@ public class FinancialTracker {
         boolean dateFilter = false;
         System.out.println("\nTransactions From " + startDate + " To " + endDate);
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().isEqual(startDate) || transaction.getDate().isAfter(startDate) && transaction.getDate().isBefore(endDate) || transaction.getDate().isEqual(endDate)) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %-10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -329,12 +329,12 @@ public class FinancialTracker {
         boolean vendorFilter = false;
         System.out.println("\nTRANSACTIONS FOUND FROM VENDOR: " + vendor);
         System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
-        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
 
         for (Transaction transaction : transactions) {
             if (transaction.getVendor().equalsIgnoreCase(vendor)){
                 /*System.out.println(transaction);*/
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %-10.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
