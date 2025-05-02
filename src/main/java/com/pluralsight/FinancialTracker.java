@@ -128,12 +128,6 @@ public class FinancialTracker {
             System.out.println("Error Saving To File!" + e.getMessage());
         }
     }
-    // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
-    // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
-    // The amount should be a positive number.
-    // After validating the input, a new `Transaction` object should be created with the entered values.
-    // The new deposit should be added to the `transactions` ArrayList.
-
     private static void addPayment(Scanner scanner) {
         System.out.println("\nAdd Payment");
         LocalDate date = null;
@@ -160,8 +154,8 @@ public class FinancialTracker {
         System.out.println("Enter Vendor: ");
         String vendor = scanner.nextLine();
 
-        System.out.println("Enter Amount: ");
-        double amount = Double.parseDouble(scanner.nextLine()) * -1;
+        System.out.println("Enter Amount As Negative Number: ");
+        double amount = -Math.abs(Double.parseDouble(scanner.nextLine()));
 
 //            if (amount <= 0) {
 //                System.out.println("Deposit Amount Must Be Positive");
@@ -183,13 +177,6 @@ public class FinancialTracker {
 
         }
     }
-
-    // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
-    // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
-    // The amount received should be a positive number then transformed to a negative number.
-    // After validating the input, a new `Transaction` object should be created with the entered values.
-    // The new payment should be added to the `transactions` ArrayList.
-
     private static void ledgerMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -225,15 +212,12 @@ public class FinancialTracker {
             }
         }
     }
-
-    // This method should display a table of all transactions in the `transactions` ArrayList.
-    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayLedger() {
         System.out.println("\nLEDGER");
-        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
+        System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
-            System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+            System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
                     transaction.getDate().format(DATE_FORMATTER),
                     transaction.getTime().format(TIME_FORMATTER),
                     transaction.getDescription(),
@@ -242,16 +226,13 @@ public class FinancialTracker {
         }
 //            System.out.println(transaction);
     }
-
-    // This method should display a table of all deposits in the `transactions` ArrayList.
-    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayDeposits() {
         System.out.println("\nDEPOSITS");
-        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
+        System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() > 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -260,16 +241,13 @@ public class FinancialTracker {
             }
         }
     }
-
-    // This method should display a table of all payments in the `transactions` ArrayList.
-    // The table should have columns for date, time, description, vendor, and amount.
     private static void displayPayments() {
         System.out.println("\nPAYMENTS");
-        System.out.println("DATE       | TIME     | DESCRIPTION          | VENDOR            | AMOUNT   ");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("DATE         | TIME       | DESCRIPTION                    | VENDOR               | AMOUNT   ");
+        System.out.println("---------------------------------------------------------------------------------------------");
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < 0) {
-                System.out.printf("%-12s | %-10s | %-30s | %-20s | %10.2f\n",
+                System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
                         transaction.getDescription(),
@@ -295,15 +273,11 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1":
-                    // Generate a report for all transactions within the current month,
-                    // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate thisMonth = LocalDate.now().withDayOfMonth(1);
                     filterTransactionsByDate(thisMonth, LocalDate.now());
 
                     break;
                 case "2":
-                    // Generate a report for all transactions within the previous month,
-                    // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate firstOfLastMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
 
                     //lengthOfMonth() = returns the correct number of days for any month (28-31)
@@ -311,21 +285,15 @@ public class FinancialTracker {
                     filterTransactionsByDate(firstOfLastMonth, lastOfLastMonth);
                     break;
                 case "3":
-                    // Generate a report for all transactions within the current year,
-                    // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate thisYear = LocalDate.now().withDayOfYear(1);
                     filterTransactionsByDate(thisYear, LocalDate.now());
                     break;
                 case "4":
-                    // Generate a report for all transactions within the previous year,
-                    // including the date, time, description, vendor, and amount for each transaction.
                     LocalDate firstOfLastYear = LocalDate.now().minusYears(1).withDayOfYear(1);
                     LocalDate lastOfLastYear = LocalDate.now().minusYears(1).withDayOfYear(firstOfLastYear.lengthOfYear()); //This checks for leap years
                     filterTransactionsByDate(firstOfLastYear, lastOfLastYear);
                     break;
                 case "5":
-                    // Prompt the user to enter a vendor name, then generate a report for all transactions
-                    // with that vendor, including the date, time, description, vendor, and amount for each transaction.
                     System.out.println("\nEnter Vendor Name: ");
                     String vendor = scanner.nextLine().trim();
                     filterTransactionsByVendor(vendor);
@@ -347,8 +315,6 @@ public class FinancialTracker {
 
         for (Transaction transaction : transactions) {
             if (transaction.getDate().isEqual(startDate) || transaction.getDate().isAfter(startDate) && transaction.getDate().isBefore(endDate) || transaction.getDate().isEqual(endDate)) {
-
-                /*System.out.println(transaction);*/
                 System.out.printf("%-12s | %-10s | %-30s | %-20s | %.2f\n",
                         transaction.getDate().format(DATE_FORMATTER),
                         transaction.getTime().format(TIME_FORMATTER),
@@ -362,12 +328,6 @@ public class FinancialTracker {
         if (!dateFilter) {
             System.out.println("No Transactions Found!");
         }
-
-        // This method filters the transactions by date and prints a report to the console.
-        // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
-        // The method loops through the transactions list and checks each transaction's date against the date range.
-        // Transactions that fall within the date range are printed to the console.
-        // If no transactions fall within the date range, the method prints a message indicating that there are no results.
     }
 
     private static void filterTransactionsByVendor(String vendor) {
@@ -394,10 +354,5 @@ public class FinancialTracker {
         if (!vendorFilter) {
             System.out.println("NO TRANSACTIONS FOUND FROM VENDOR: " + vendor);
         }
-        // This method filters the transactions by vendor and prints a report to the console.
-        // It takes one parameter: vendor, which represents the name of the vendor to filter by.
-        // The method loops through the transactions list and checks each transaction's vendor name against the specified vendor name.
-        // Transactions with a matching vendor name are printed to the console.
-        // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
     }
 }
