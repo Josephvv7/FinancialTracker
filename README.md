@@ -66,7 +66,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Demo
 
-![DEMO Financial Tracker App.mp4](../../../DEMO%20Financial%20Tracker%20App.mp4)
+![DEMO Financial Tracker App.mp4](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGI5dnhoNnEzNzQwaTNvNzUwdTVwOXExZjloMzVlMjJrNXU4MWN5biZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/glSsoLXiqIKAvJYXUS/giphy.gif)
 
 
 ## Future Work
